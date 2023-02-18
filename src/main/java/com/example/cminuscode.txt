@@ -1,0 +1,54 @@
+/* TEST: Real code (also test throwing out this comment) */
+$
+int fact (int x) 
+/* recursive factorial function */ {
+    if (x > 1)
+        return x * fact(x-1);
+    else
+        return 1;
+}
+
+{for4dollar$sign};.
+
+void main ( void ) {
+    int x;
+    x = read();
+    if (x > 0) write (fact(x));
+}
+
+/* TEST: Should not return tokens nested in comments */
+/* int sample = 4; sample++; int x = sample; */
+
+/* TEST: Do not check for nested comments */
+/* This is a 
+    /* nested */
+comment */
+
+/* TEST: Catch and handle errors intermixed among valid tokens */
+else if int a3 return void while 3a and 75
+
+/* TEST: Catching multiple operators which represent one operation */
+sample <= sampleTwo;
+sampleTwo >= sampleThree;
+sampleFour==sampleFive;
+!=
+!sample + sample;
+((())){[(hi)there]billy}
+)(
+,;,;,;&
+/* note: ampersand should throw an error as an illegal token */
+
+/* TEST: ID variants */
+a
+int bcd
+integer sEvEnTy
+int Four;
+forty5seventY
+
+return keyword void int else else 3 ~
+/* TEST: NUM variants */
+int 4 = number haha ((backwards))
+435
+6isMyAge
+78IsmyHEIGHT
+< < a ; abcdef 
