@@ -15,8 +15,11 @@ import java.util.*;
  * the Token class in Token.java.
  */
 public class Scanner {
+
+    //A constant array of reserved keywords. Identifiers that match any of these are reset to a KEYWORD token type
+    final static String reservedWords[] = {"else", "if", "int", "return", "void", "while"};
     public static void main( String[] args ) {
-        CMinusScanner sn = new CMinusScanner("src/main/java/com/example/cminuscode.txt");
+        CMinusScanner2 sn = new CMinusScanner2("src/main/java/com/example/cminuscode.txt");
         ArrayList<Token> tokens = new ArrayList<Token>();
 
         while (sn.viewNextToken().getEnumType() != Token.TokenType.EOF_TOKEN) {
@@ -27,7 +30,7 @@ public class Scanner {
         System.out.println("\nTokens:");
         for (Token t : tokens) {
             if (t.getType() == "ID") {
-                for (String w : CMinusScanner.reservedWords) {
+                for (String w : reservedWords) {
                     if (w.equals(t.getData())) {
                         t.setType(Token.TokenType.KEYWORD);
                     }

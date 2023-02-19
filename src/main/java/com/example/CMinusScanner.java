@@ -31,9 +31,6 @@ public class CMinusScanner {
         DONE
     }
 
-    //A constant array of reserved keywords. Identifiers that match any of these are reset to a KEYWORD token type
-    final static String reservedWords[] = {"else", "if", "int", "return", "void", "while"};
-
     //private vars
     private PushbackReader inFile;
     private Token nextToken;
@@ -42,7 +39,6 @@ public class CMinusScanner {
     public CMinusScanner (String file) {
         try {
             File cmcode = new File(file);
-            System.out.println(cmcode.getAbsolutePath());
             inFile = new PushbackReader(new FileReader(cmcode));
         }
         catch (Exception e) {
