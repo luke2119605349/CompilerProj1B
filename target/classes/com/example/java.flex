@@ -69,8 +69,15 @@ EndOfLineComment = "//" {InputCharacter}* {LineTerminator}?
 DocumentationComment = "/*" "*"+ [^/*] ~"*/"
 
 /* identifier and number */
-Identifier = [:letter:]*
+Identifier = [:letter:]+
 Number = [0-9]+
+
+/* error tokens */
+Error = {OtherError} | {NumberError} | {LetterError} | {AnnoyingError}
+OtherError = [@|#|$|%|\^|&|_|:|.|/|`|~|\\|\||?|'|\"]+
+NumberError = [0-9]+[[:letter:]*[:letter:|[0-9]]*]*
+LetterError = [:letter:]+[[0-9]*[:letter:|[0-9]]*]*
+AnnoyingError = [[:letter:]+[[0-9]+[:letter:]+]+]|[[0-9]+[[:letter:]+[0-9]+]+]
 
 
 /* string and character literals */
@@ -105,7 +112,7 @@ SingleCharacter = [^\r\n\'\\]
   "="                            { return new Token(Token.TokenType.EQ); }
   ">"                            { return new Token(Token.TokenType.GT); }
   "<"                            { return new Token(Token.TokenType.LT); }
-  "!"                            { return new Token(Token.TokenType.ERROR); }
+  "!"                            { return new Token(Token.TokenType.ERROR, "!"); }
   "=="                           { return new Token(Token.TokenType.EQEQ); }
   "<="                           { return new Token(Token.TokenType.LTE); }
   ">="                           { return new Token(Token.TokenType.GTE); }
@@ -124,6 +131,9 @@ SingleCharacter = [^\r\n\'\\]
   /* identifier and number */
   {Identifier}                   { return new Token(Token.TokenType.ID, yytext()); }
   {Number}						 { return new Token(Token.TokenType.NUM, yytext()); }
+  
+  /* error(s) */
+  {Error}						 { return new Token(Token.TokenType.ERROR, yytext()); }
 }
 
 <STRING> {
